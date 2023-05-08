@@ -1,5 +1,6 @@
 package com.gocarshare.userservice.userservice.Controller;
 
+
 import com.gocarshare.userservice.userservice.Modal.User;
 import com.gocarshare.userservice.userservice.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,10 +10,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/profile")
 public class UserController {
 
-    @Autowired private UserService userService;
+    @Autowired
+    private UserService userService;
 
     @GetMapping("")
     public ResponseEntity<User> getUserDetails(Authentication auth){
@@ -25,8 +27,4 @@ public class UserController {
         User user = (User) auth.getPrincipal();
         return  new ResponseEntity<>(userService.setUserType(user.get_id(), userType), HttpStatus.OK);
     }
-
-//    @PostMapping("/registerVehicle")
-//    public ResponseEntity<?> registerVehicle(@RequestBody Car car){}
-
 }

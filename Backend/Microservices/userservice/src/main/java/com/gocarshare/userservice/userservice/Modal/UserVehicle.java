@@ -1,23 +1,25 @@
 package com.gocarshare.userservice.userservice.Modal;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
 
-@EqualsAndHashCode(callSuper = true)
 @Data
-@NoArgsConstructor(force = true)
 @AllArgsConstructor
-@Document(collation = "UserRegisteredVehicles")
-public class UserVehicle extends Vehicle{
+@Document(collection = "UserRegisteredVehicles")
+public class UserVehicle{
 
     @Id
     private String _id;
 
-    @NonNull
     private String inventoryId;
+
+    private String make;
+    private String model;
+    private int year;
 
     private String ownerId;
     private String availabilityStatus; // Listed, UnListed, Reserved, Commuting
@@ -27,6 +29,8 @@ public class UserVehicle extends Vehicle{
     private String bodyStyle;
     private String capacity;
     private String color;
+
+    private String licenseNumber;
 
     private Date registeredOn = new Date();
 }

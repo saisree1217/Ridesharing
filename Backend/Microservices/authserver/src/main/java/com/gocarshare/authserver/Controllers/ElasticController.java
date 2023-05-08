@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.CrossOrigin;
 @RestController
 @RequestMapping("/search")
-@CrossOrigin(origins = "*")
 public class ElasticController {
 
     @Autowired

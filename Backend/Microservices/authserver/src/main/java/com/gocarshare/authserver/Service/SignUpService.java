@@ -1,10 +1,12 @@
 package com.gocarshare.authserver.Service;
 
 import com.gocarshare.authserver.Configurations.RestUtil;
+import com.gocarshare.authserver.Exception.ExceptionResponse;
 import com.gocarshare.authserver.Modal.FirebaseSignInResponse;
 import com.google.firebase.auth.*;
 import org.apache.http.client.utils.URIBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -24,6 +26,10 @@ public class SignUpService {
     public UserRecord signup(String emailId, String password, String displayName) throws FirebaseAuthException, ExecutionException, InterruptedException {
 
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+
+        if(checkIfUserExists(emailId)){
+          throw new ExceptionResponse(HttpStatus.BAD_REQUEST.value(), "User already exists with this email address");
+        }
 
         UserRecord.CreateRequest createRequest = new UserRecord.CreateRequest();
 //        createRequest.setDisabled(Boolean.TRUE);
@@ -76,5 +82,19 @@ public class SignUpService {
         FirebaseToken fbtoken = auth.verifyIdToken(token);
 
         return fbtoken.getEmail();
+    }
+
+    public boolean checkIfUserExists(String email){
+      FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+      try {
+        UserRecord userRecord = firebaseAuth.getUserByEmail(email);
+        return true;
+      } catch (FirebaseAuthException e) {
+        if (e.getErrorCode().equals("user-not-found")) {
+          return false;
+        } else {
+         return false;
+        }
+      }
     }
 }

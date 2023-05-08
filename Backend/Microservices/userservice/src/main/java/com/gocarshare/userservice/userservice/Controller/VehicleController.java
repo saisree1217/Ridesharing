@@ -10,8 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
-
 @RestController
 @RequestMapping("/vehicle")
 public class VehicleController {
@@ -31,17 +29,15 @@ public class VehicleController {
     }
 
     @GetMapping("/vehicle")
-    public ResponseEntity<?> getUserVehicles(Authentication authentication){
+    public Object getUserVehicles(Authentication authentication){
         User user =(User) authentication.getPrincipal();
         String userId = user.get_id();
 
-        return  new ResponseEntity<>(vehicleRegistrationService.getUserVehicles(userId), org.springframework.http.HttpStatus.OK);
+        return  vehicleRegistrationService.getUserVehicles(userId);
     }
 
-
-//    @GetMapping("/test")
-//    public void createIndex() throws IOException {
-//        userService.clinet();
-//    }
-
+    @GetMapping("/test")
+    public String test(){
+        return "This thing is working";
+    }
 }

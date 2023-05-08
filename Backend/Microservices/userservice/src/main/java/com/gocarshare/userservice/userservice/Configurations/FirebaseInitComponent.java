@@ -29,7 +29,6 @@ public class FirebaseInitComponent {
        InputStream inputStream = resource.getInputStream();
 
 
-        System.out.println(inputStream.toString());
         FirebaseOptions options = new FirebaseOptions.Builder()
                 .setCredentials(GoogleCredentials.fromStream(inputStream))
                 .build();
